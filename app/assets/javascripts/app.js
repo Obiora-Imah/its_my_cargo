@@ -18,14 +18,6 @@ angular.module("itsMyCargoApp", [
 
     $urlMatcherFactoryProvider.strictMode(false);
 
-    // $provide.decorator("$locale", ["$delegate", function($delegate) {
-    //   if ($delegate.id === "en-us") {
-    //     $delegate.NUMBER_FORMATS.PATTERNS[1].negPre = "-\u00A4";
-    //     $delegate.NUMBER_FORMATS.PATTERNS[1].negSuf = "";
-    //   }
-    //   return $delegate;
-    // }]);
-
     var main = {
       name: "main",
       templateUrl: "layouts/layout.html"
