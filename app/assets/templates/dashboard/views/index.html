@@ -1,0 +1,231 @@
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Dashboard</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-3">
+              <i class="fa fa-comments fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+              <div class="huge">{{ totalShipment }}</div>
+              <div>Total Shipments</div>
+            </div>
+          </div>
+        </div>
+        <a>
+          <div class="panel-footer">
+            <span class="pull-left">View Details</span>
+            <span class="pull-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="panel panel-green">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-3">
+              <i class="fa fa-tasks fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+              <div class="huge">{{ totalBooking }}</div>
+              <div>Total Bookings</div>
+            </div>
+          </div>
+        </div>
+        <a>
+          <div class="panel-footer">
+            <span class="pull-left">View Details</span>
+            <span class="pull-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="panel panel-yellow">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-3">
+              <i class="fa fa-shopping-cart fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+              <div class="huge">124</div>
+              <div>New Orders!</div>
+            </div>
+          </div>
+        </div>
+        <a href="#">
+          <div class="panel-footer">
+            <span class="pull-left">View Details</span>
+            <span class="pull-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="panel panel-red">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-3">
+              <i class="fa fa-support fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+              <div class="huge">13</div>
+              <div>Support Tickets!</div>
+            </div>
+          </div>
+        </div>
+        <a href="#">
+          <div class="panel-footer">
+            <span class="pull-left">View Details</span>
+            <span class="pull-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+            <!-- /.row -->
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-bar-chart-o fa-fw"></i>Shipment Summary
+        </div>
+        <div class="panel-body">
+          <canvas id="doughnut" class="chart chart-doughnut"
+            chart-data="piedata" chart-labels="pielabels">
+          </canvas> 
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-bar-chart-o fa-fw"></i> Route Summary
+        </div>
+        <canvas id="pie"
+                class="chart chart-pie"
+                chart-data="routepiedata"
+                chart-labels="routepielabels"
+                chart-options="options">
+        </canvas> 
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-bar-chart-o fa-fw"></i>Booking Data
+        </div>
+        <canvas id="bar"
+                class="chart chart-bar"
+                chart-data="bardata"
+                chart-labels="barlabels"
+                chart-series="series">
+        </canvas>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-bar-chart-o fa-fw"></i> Freight Capacity Sales
+        </div>
+
+       <canvas id="bar" class="chart chart-bar"
+               chart-data="capacitybardata2"
+               chart-labels="capacitybarlabels2"
+               chart-series="capacitybarseries2">
+      </canvas>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-bar-chart-o fa-fw"></i> Freight Service Sales  Amount in ($)
+        </div>
+
+       <canvas id="bar" class="chart chart-bar"
+               chart-data="serviceBardata2"
+               chart-labels="serviceBarlabels2"
+               chart-series="serviceBarseries2">
+      </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bell fa-fw"></i> Freight Capacity Sold in Shop
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Capacity</th>
+                  <th>Volume Sold</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in capacityHeaders.row">
+                  <td>{{ row[0] }}</td>
+                  <td>{{ row[1] }}</td>
+               </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bell fa-fw"></i> Freight CValueapacity Sold in Shop
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Volume Sold in Shop</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in serviceHeaders.row">
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
