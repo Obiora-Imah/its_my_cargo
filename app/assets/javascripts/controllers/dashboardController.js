@@ -26,7 +26,7 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
         .error(function(err) {
           // handle error later
         })
-    }
+    };
 
     var cargoRouteSummary = function() {
       CargoMiddleWare.getRouteSummary()
@@ -44,7 +44,7 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
         .error(function(err) {
           // handle error later
         })
-    }
+    };
 
     var cargoBookingSummary = function() {
       CargoMiddleWare.getBookingSummary()
@@ -60,12 +60,13 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
         .error(function(err) {
           // handle error later
         })
-    }
+    };
+
     var cargoFreightSummary = function() {
       CargoMiddleWare.getFreightSummary()
         .success(function(response) {
-          $scope.capacity = serviceSold(response.capacity_sold)
-          $scope.service = serviceSold(response.service_amount)
+          $scope.capacity = databuilder(response.capacity_sold)
+          $scope.service = databuilder(response.service_amount)
           $scope.capacityHeaders = headers($scope.capacity)
           $scope.serviceHeaders = headers($scope.service)
           $scope.freightCapacityBarData = salesBarData($scope.capacity, response.capacity_sold);
@@ -73,21 +74,28 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
 
           $scope.capacitybarlabels2 = [];
           $scope.capacitybardata2 = [];
+          var capacitySwap = [];
           $scope.freightCapacityBarData.forEach(function(barChart) {
             $scope.capacitybarlabels2.push(barChart[0]);
-            $scope.capacitybardata2 .push(barChart[1]);
+            capacitySwap.push(barChart[1]);
+            $scope.capacitybardata2.push([]);
           })
+          $scope.capacitybardata2 = transpose(capacitySwap, $scope.capacitybardata2);
           $scope.capacitybarseries2 = [];
-          $scope.capacityHeaders.column.forEach(function(column) {
-            $scope.capacitybarseries2.push(column)
+          $scope.capacityHeaders.column.forEach(function(header) {
+            $scope.capacitybarseries2.push(header)
           })
 
           $scope.serviceBarlabels2 = [];
           $scope.serviceBardata2 = [];
+          var serviceSwap = [];
           $scope.freightServiceBarData.forEach(function(barChart) {
             $scope.serviceBarlabels2.push(barChart[0]);
-            $scope.serviceBardata2 .push(barChart[1]);
+            serviceSwap.push(barChart[1]);
+            $scope.serviceBardata2.push([]);
           })
+
+          $scope.serviceBardata2 = transpose(serviceSwap, $scope.serviceBardata2);
           $scope.serviceBarseries2 = [];
           $scope.serviceHeaders.column.forEach(function(column) {
             $scope.serviceBarseries2.push(column)
@@ -96,20 +104,18 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
         .error(function(err) {
           // handle error later
         })
-    }
+    };
     
-    var capacitySold = function(obj) {
-      var jsonData = [];
-      var keys = Object.keys(obj)
-      keys.forEach(function(key) {
-        var tblData = JSON.parse(key)
-        tblData.push(obj[key])
-        jsonData.push(tblData)
-      })
-      return jsonData
-    }
+    var transpose = function(swapArr, transposeArr) {
+      for(var i = 0; i < swapArr.length; i++) {
+        for(var j=0; j < swapArr[i].length; j++) {
+          transposeArr[j][i] = swapArr[i][j];
+        }
+      }
+      return transposeArr;
+    };
 
-    var serviceSold = function(obj) {
+    var databuilder = function(obj) {
       var jsonData = [];
       var keys = Object.keys(obj)
       keys.forEach(function(key) {
@@ -119,7 +125,7 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
       })
 
       return jsonData
-    }
+    };
 
     var headers = function(keys) {
       var _headers = {
@@ -142,7 +148,8 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
       })
       track = null
       return _headers
-    }
+    };
+
     var salesBarData = function(freights, raw) {
       var almightArr = [];
       var _headers = headers(freights);
@@ -154,17 +161,18 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
         var sum = 0;
         _headers.column.forEach(function(col) {
             var originalKey = "[\"" + capacity + "\", \"" + col + "\"]"
-            console.log(originalKey)
             if(!isNaN(raw[originalKey]))
               freightTypesData.push(raw[originalKey]);
             else
               freightTypesData.push(0);
         })
+
         chartData.push(freightTypesData);  
         almightArr.push(chartData)      
       })
+
       return almightArr;
-    }
+    };
 
     var getSum = function(arr, element) {
      var map =  arr.map(function(item) {
@@ -173,10 +181,11 @@ angular.module("itsMyCargoApp.controllers").controller("dashboardCtrl", [
         else return 0 
       }).reduce(add, 0)
      return map
-    }
+    };
+
     var add = function(a, b) {
       return a + b;
-    }
+    };
 
   	$scope.init();
   }
