@@ -5,15 +5,15 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version 2.2.x
 
-* System dependencies
+* System dependencies: rails 5.x.x
 
 * Configuration
 
-* Database creation
+* Database creation: rake db:migrate
 
-* Database initialization
+* Database initialization: rake db:seed
 
 * How to run the test suite
 
